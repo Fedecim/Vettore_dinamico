@@ -1,0 +1,137 @@
+classe vettore dinamico
+int dim = numero di elementi nel vettore
+T* curr = punta al prossimo elemento da inserire
+int dimMax = dimensione massima del vettore
+T* vettore = vettore interno
+
+se dim diventa = a dimMax-1 : moltiplica dimax x 2 alloca un nuovo vettore e crea una copia con dimensione aggiunta
+
+se dim diventa < di dimax /2 allora riduco la dimensione del vettore : dimmax / 2 con la funzione realloc( array(puntatore), 10*sizeof(T))
+
+costruttori:
+Vettore()
+Vettore(elemento)
+Vettore(dim,elemento)
+Vettore(const Vettore &copia)
+
+distruttore:
+Vettore()
+
+metodi:
+
+set/get:
+get vettore
+get dim
+get dimmax
+get curr
+set vettore
+set dim
+set curr
+set dimmax
+
+inserimento/cancellazione:
+
+push_back(T elemento)
+clear() // elimina tutti gli elementi dal vettore
+pop_back()
+at(indice) // accede a un elemento tramite indice
+Vettore operator [] (int indice) // accede a un elemento con indice
+front() // restituisce elemento in posizione 0 vettore
+end() // restituisce elemento in ultima posizione del vettore
+
+operatori :
+Vettore operator [] (int indice) // accede a un elemento con indice
+Vettore operator '=' (Vettore obj) // assegna il valore di un altro oggetto vettore
+
+iteratori:
+begin() // iteratore all inizio del vettore (indice 0)
+end() // iteratore alla fine
+cbegin() // idem con patate ma costante
+cend() // idem ma costante
+
+
+//costruttore senza parametri
+1 deve inizializzare il vettore interno a NULL
+2 dim e dimax a 0
+3 curr a NULL
+4 fine
+test case :
+1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
+
+//costruttore con elemento
+1 vettore e curr a null
+2 dim e dimax a 0
+3 curr a null
+4 setto la dim a 1
+5 setto dimmax a 2
+6 inizializzo il vettore con la new dimensione 2
+7 inizializzo il curr come il vettore
+8 inserisco l'elmento nel vettore
+9 incremento il curr di 1
+10 fine
+test case :
+1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
+2 provare tutti i tipi di dato anche oggetti personalizzati
+
+// costruttore con dimensione e valore/elemento
+1 vettore e curr a null
+2 dim e dimax a 0
+3 curr a null
+4 setto la dim = alla dimensione passata come parametro
+5 setto la dimmax come : dim * 2
+6 inizializzo il vettore interno con new e dim = a dimax
+7 inizializzo curr come il vettore interno (punta all elemento indice 0)
+8 inizio iterazione per riempire il vettore con il valore passato come parametro
+9 ad ogni iterazione inserisco l'elemento nel vettore e incremento curr di 1
+10 fine iterazione
+11 fine 
+test case :
+1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
+2 provare tutti i tipi di dato anche oggetti personalizzati
+
+// costruttore di copia 
+1 controllo che l'oggetto passato sia inizializzato in caso contrario termina
+2 con l ogg inizializzato controllo che la dimensione sia diversa da 0 in caso contrario termina. (se la dim è 0 la dimmax saràßempre = a 2)
+3 con ogg iniz. con dim != da 0 setto dim = ogg.dim
+4 setto dimmax = ogg.dimax
+### controllo che dim non sia = a dimmax-1 se lo è : dimmax * 2
+5 inizializzo il vettore interno con new e dim = dimax
+6 inizializzo curr = al vettore interno
+7 inizio iterazione scorro l array interno dell ogg di copia
+8 ad ogni iter : inserisco copia elemento nel vettore interno e incremento curr
+9 fine iterazione
+10 fine.
+
+test case :
+1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
+2 provare tutti i tipi di dato anche oggetti personalizzati
+3 oggetto non izializzato
+4 vettore di puntatori
+
+// pushback
+
+1. controllo che il vettore interno non sia nullo nel caso lo sia inizializzo il vettore con dimmax = 2 e dim = 1
+2. controllo che il curr non sia = a dimax-1 in caso lo sia : creo copia vettore interno con dimensione dimax * 2 (creare metodo privato per fare questa cosa)
+3. inserisco l'elemento nel vettore (posizione di curr)
+4. incremento curr
+5. fine
+test case :
+1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
+2 provare tutti i tipi di dato anche oggetti personalizzati
+3 oggetto non izializzato
+4 vettore di puntatori
+5 elemento è a sua volta un oggetto vettore o un vettore
+6 vettore pieno
+7 vettore vuoto
+8 vettore non iniziallizato
+9 
+
+// begin()
+l'iteratore fondamentalmente è un puntatore (meglio un oggetto) ma nel mio caso vorrei semplicemente un puntatore costante all'inizio del vettore
+// end()
+stessa cosa ma che punta alla fine del vettore (non la vera fine del vettore ma deve essere equivalente al curr)
+
+quindi per usare end() per esempio in un ciclo for:
+for Iteratore it = vett.begin(); it < vett.end(); ++it;
+
+quindi devo implementare anche classe Iteratore (probabile classe figlia di iterator o addirittura oggetto iterator)
