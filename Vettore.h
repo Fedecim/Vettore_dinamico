@@ -15,10 +15,9 @@ public:
     Vettore(const T& elemento); // inizializza vettore e caria elemento
     Vettore(int dim, T valore); // inizializza vettore con dimensione ed ogni elemento con il valore passato come parametro 
     Vettore(const Vettore &copia); // inzializza vettore come la copia di un oggetto vettore passato come parametro
-    Vettore(const T& array); // inizialliza vettore con la copia di elementi contenuti nell array C passato come parametro
+    //Vettore(const T& array); // inizialliza vettore con la copia di elementi contenuti nell array C passato come parametro
+    Vettore(const T* inizio, const T* fine); // inizializza oggetto vettore con la copia degli elementi tra due indirizzi di un array C (costruttore di range) 
     /*
-    Vettore(T inizio , T fine); // inizializza oggetto vettore con la copia degli elementi tra due indirizzi di un array C (costruttore di range) 
-
     // DISTRUTTORE
     ~Vettore();
 
@@ -35,6 +34,9 @@ public:
     // INSERIMENTO
     void push_back(const T& elemento);
     void pop_back();
+
+    // ITERATORI
+    
     
     /*
 

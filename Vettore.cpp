@@ -1,4 +1,4 @@
-#include "vettore.h"
+#include "Vettore.h"
 #include <iostream>
 
 
@@ -37,7 +37,7 @@ test case :
 2 provare tutti i tipi di dato anche oggetti personalizza
 */
 template<typename T>
-Vettore<T>::Vettore(T elemento){
+Vettore<T>::Vettore(const T& elemento){
     this->vettore = NULL;
     this->dim = 1;
     this->dimMax = 2;
@@ -137,9 +137,10 @@ Vettore<T>::Vettore(const Vettore &copia){
     //this->vettore = NULL;
     printf("Fine costruttore di copia\n");
 }
+// COSTRUTTORE DI RANGE
 template<typename T>
-Vettore::Vettore(const T& array){
-    
+Vettore<T>::Vettore(const T* inzio, const T* fine){
+    printf("sono il costruttore di range\n");
 }
 /*
 metodo push_back :
@@ -152,7 +153,6 @@ in sintesi bisogna :
 2 - controlla se il vettore è pieno ? : crea copia del vettore con dimax * 2
 3 - controlla se è quasi pieno ? : crea copia del vettore con dimax * 2
 */
-
 template<typename T>
 void Vettore<T>::push_back(const T& elemento){
     // controlla se il vettore è inizializzato
@@ -216,3 +216,5 @@ void Vettore<T>::pop_back(){
     this->dim--;
     //printf("Hello im the pop back method motherfucker\n");
 }
+
+// ITERATORI
