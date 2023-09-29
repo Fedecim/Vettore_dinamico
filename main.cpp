@@ -1,17 +1,24 @@
 #include <iostream>
-#include "Vettore.cpp"
+#include "vettore.cpp"
 #include <string>
 using namespace std;
-class prova{
-    public:
-    int dato1;
-    int dato2;
-    prova(){ dato1 = 100; dato2 = 300; };
-};
+template<typename T>
+void stampa(Vettore<T>& vett){
+    T* curr = nullptr;
+    curr = vett.getVett();
+    for (int i = 0; i < vett.getDim(); i++) {
+        cout << "["<< i<< "]: "<< *( vett.getVett() + i) << "\n";
+    }
+}
 int main()
 {
-    Vettore <int> test(100,0);
-    Vettore <int> test2[200];
+    Vettore <int> vettore(5,0);
+    vettore.push_back(10);
+    stampa(vettore);
+    vettore.pop_back();
+    stampa(vettore);
+    vettore.push_back(20000);
+    stampa(vettore);
     printf("FINE PROGRAMMA\n");
     return 1;
 }

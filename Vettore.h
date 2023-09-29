@@ -1,6 +1,5 @@
 #include <iostream>
 #include <iterator>
-
 template <typename T>
 class Vettore
 {
@@ -13,10 +12,11 @@ private:
 public:
     // COSTRUTTORI
     Vettore(); // inzializza vettore vuoto 
-    Vettore(T elemento); // inizializza vettore e caria elemento
+    Vettore(const T& elemento); // inizializza vettore e caria elemento
     Vettore(int dim, T valore); // inizializza vettore con dimensione ed ogni elemento con il valore passato come parametro 
-    /*Vettore(const Vettore &copia); // inzializza vettore come la copia di un oggetto vettore passato come parametro
-    Vettore(T array); // inizialliza vettore con la copia di elementi contenuti nell array C passato come parametro
+    Vettore(const Vettore &copia); // inzializza vettore come la copia di un oggetto vettore passato come parametro
+    Vettore(const T& array); // inizialliza vettore con la copia di elementi contenuti nell array C passato come parametro
+    /*
     Vettore(T inizio , T fine); // inizializza oggetto vettore con la copia degli elementi tra due indirizzi di un array C (costruttore di range) 
 
     // DISTRUTTORE
@@ -26,17 +26,19 @@ public:
     void setDim(int dim);
     void setDimax(int dimMax);
     void setCurr(T* curr);
-    void setVett(T* vett);
-    int getDim();
-    int getDimMax();
-    T* getVett();
-    T* getCurr();
+    void setVett(T* vett);*/
+    int getDim()const{ return this->dim; }
+    int getDimMax()const{ return this->dimMax; }
+    T* getVett()const{ return this->vettore; }
+    T* getCurr()const{ return this->curr; }
 
     // INSERIMENTO
-    void push_back(T elemento);
+    void push_back(const T& elemento);
+    void pop_back();
+    
+    /*
 
     // CANCELLAZIONE
-    void pop_back();
     void clear();
 
     // ACCESSO ELEMENTI
