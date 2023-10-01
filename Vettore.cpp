@@ -1,43 +1,15 @@
-#include "Vettore.h"
+#include "vettore.h"
 #include <iostream>
 
-
-/*
-//costruttore senza parametri
-1 deve inizializzare il vettore interno a NULL
-2 dim e dimax a 0
-3 curr a NULL
-4 fine
-test case :
-1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
-*/
 template<typename T>
 Vettore<T>::Vettore(){
     this->vettore = NULL;
     this->dim = 0;
     this->dimMax = 0;
     this->curr = NULL;
-    //fine
 }
-
-/*
-//costruttore con elemento
-1 vettore e curr a null
-2 dim e dimax a 0
-3 curr a null
-4 setto la dim a 1
-5 setto dimmax a 2
-6 inizializzo il vettore con la new dimensione 2
-7 inizializzo il curr come il vettore
-8 inserisco l'elmento nel vettore
-9 incremento il curr di 1
-10 fine
-test case :
-1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
-2 provare tutti i tipi di dato anche oggetti personalizza
-*/
 template<typename T>
-Vettore<T>::Vettore(const T& elemento){
+Vettore<T>::Vettore(T elemento){
     this->vettore = NULL;
     this->dim = 1;
     this->dimMax = 2;
@@ -46,27 +18,7 @@ Vettore<T>::Vettore(const T& elemento){
     this->curr = this->vettore;
     *(this->vettore) = elemento;
     this->curr++;
-    // fine
 }
-
-/*
-// costruttore con dimensione e valore/elemento
-1 vettore e curr a null
-2 dim e dimax a 0
-3 curr a null
-4 setto la dim = alla dimensione passata come parametro
-5 setto la dimmax come : dim * 2
-6 inizializzo il vettore interno con new e dim = a dimax
-7 inizializzo curr come il vettore interno (punta all elemento indice 0)
-8 inizio iterazione per riempire il vettore con il valore passato come parametro
-9 ad ogni iterazione inserisco l'elemento nel vettore e incremento curr di 1
-10 fine iterazione
-11 fine 
-test case :
-1 cosa succede se si tenta di inizializzare due volte lo stesso oggetto ?
-2 provare tutti i tipi di dato anche oggetti personalizzati
-*/
-
 template<typename T>
 Vettore<T>::Vettore(int dim, T valore){
     this->vettore = NULL;
@@ -82,23 +34,7 @@ Vettore<T>::Vettore(int dim, T valore){
         *(this->curr) = valore;
         this->curr++;
     }
-    // fine
 }
-
-/*
-costruttore di copia 
-1 controllo che l'oggetto passato sia inizializzato in caso contrario termina
-2 con l ogg inizializzato controllo che la dimensione sia diversa da 0 in caso contrario termina. (se la dim è 0 la dimmax saràßempre = a 2)
-3 con ogg iniz. con dim != da 0 setto dim = ogg.dim
-4 setto dimmax = ogg.dimax
-### controllo che dim non sia = a dimmax-1 se lo è : dimmax * 2
-5 inizializzo il vettore interno con new e dim = dimax
-6 inizializzo curr = al vettore interno
-7 inizio iterazione scorro l array interno dell ogg di copia
-8 ad ogni iter : inserisco copia elemento nel vettore interno e incremento curr
-9 fine iterazione
-10 fine.
-*/
 template<typename T>
 Vettore<T>::Vettore(const Vettore &copia){
 
@@ -134,25 +70,28 @@ Vettore<T>::Vettore(const Vettore &copia){
         *(this->curr) = *(copia.getVett()+i);
         this->curr++;
     }
-    //this->vettore = NULL;
-    printf("Fine costruttore di copia\n");
 }
-// COSTRUTTORE DI RANGE
 template<typename T>
-Vettore<T>::Vettore(const T* inzio, const T* fine){
-    printf("sono il costruttore di range\n");
+Vettore<T>::Vettore(const T* inizio, const T* fine){
+    // controlla che inizio non sia NULL
+    if(!(inizio)){
+        return;
+    }
+    // se inizio e fine sono uguali
+    if(inizio == fine){
+        return;
+    }
+    // inizializzo il vettore interno
+    this->dimMax = (fine - inizio ) * 2;
+    this->dim = fine-inizio;
+    this->vettore = new T[dimMax];
+    this->curr = this->vettore;
+    // inizio iterazione
+    for (const T* it = inizio; it != fine; ++it) {
+        *(this->curr) = *it;
+        this->curr++;
+    }
 }
-/*
-metodo push_back :
-in sintesi bisogna :
- - controllare se esiste
- - controllare se è pieno
- - controllare se è quasi pieno (dimax - 1)
-
-1 - controlla se il vettore esiste ? : inizializzalo ma prima inizializza tutte le variabili : dim e dimax poi vettore e curr
-2 - controlla se il vettore è pieno ? : crea copia del vettore con dimax * 2
-3 - controlla se è quasi pieno ? : crea copia del vettore con dimax * 2
-*/
 template<typename T>
 void Vettore<T>::push_back(const T& elemento){
     // controlla se il vettore è inizializzato
@@ -184,15 +123,7 @@ void Vettore<T>::push_back(const T& elemento){
     *(this->curr) = elemento;
     this->curr++;
     this->dim++;
-    printf("SONO IL METODO push_back\n");
 }
-/*
-popoback:
-- controllare che sia inizializzato in caso non lo sia : o ritorniamo eccezzione o facciamo gli indiani
-- controllare che non sia vuoto : eccezzione o indiani
-- controllare che la dimMax non sia grande 4 volte la dim in caso lo sia dimMax/2
-
-*/
 template<typename T>
 void Vettore<T>::pop_back(){
     // caso vettore non inizializzato
@@ -214,7 +145,60 @@ void Vettore<T>::pop_back(){
     // semplicemente sposto indietro il curr
     this->curr--;
     this->dim--;
-    //printf("Hello im the pop back method motherfucker\n");
 }
 
-// ITERATORI
+// CANCELLAZIONE
+// CLEAR : Per cancellare gli elementi del vettore è sufficente fare tornare il puntatore interno
+// curr (che punta posizione prossimo elemento) indietro uguale al vettore interno (stesso indirizzo)
+template<typename T>
+void Vettore<T>::clear(){
+    // se il vettore interno non è inizializzato
+    if(this->vettore == NULL){
+        return;
+    }
+    // se il vettore è gia vuoto
+    if(this->vettore == this->curr){
+        return;
+    }
+    this->curr = this->vettore;
+    this->dim = 0;
+}
+template<typename T>
+Vettore<T>& Vettore<T>::operator=(const Vettore<T> &copia){
+    // se il vettore non è uguale a null è pieno e andrebbe distrutto e rinizializzato
+    if(this->vettore){
+        delete[]this->vettore;
+    }
+    // controllare che l'oggetto passato sia un oggetto valido : inizializzato
+    if(!(copia.getVett())){
+        return *this;
+    }
+    this->dim = copia.getDim();
+    this->dimMax =copia.getDimMax();
+    this->vettore = new T[dimMax];
+    this->curr = this->vettore;
+    if(copia.getCurr() != copia.getVett()){
+        for (T* i = copia.inizio(); i != copia.fine(); ++i) {
+            *(this->curr) = *i;
+            this->curr++;
+        }
+    }
+    else
+    {
+        throw std::invalid_argument("Oggetto di copia non valido");
+    }
+    return *this;
+}
+
+template<typename T>
+T& Vettore<T>::at(const int &indice){
+    if(indice < 0 || indice > this->dim){
+        throw  std::out_of_range("Index out of range");
+    }
+    return *(this->vettore + indice);
+}
+
+template<typename T>    
+T Vettore<T>::operator[](int indice)const{
+    return *(this->vettore + indice);
+}
